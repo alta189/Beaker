@@ -17,39 +17,35 @@
  * You should have received a copy of the GNU Lesser General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.alta189.beaker;
+package com.alta189.beaker.test.simple;
 
-import com.alta189.beaker.test.simple.SimpleEvent;
-import com.alta189.beaker.test.simple.SimpleListener;
-import com.alta189.commons.objects.Named;
+import com.alta189.beaker.EventHandler;
+import com.alta189.beaker.Listener;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
+public class SimpleListener implements Listener {
+	private final long data;
+	private boolean result = false;
 
-public class CommonEventManagerTest implements Named {
-
-	@Test
-	public void simpleTest() {
-		final EventManager manager = new CommonEventManager();
-
-		final long data = System.currentTimeMillis();
-
-		SimpleListener listener = new SimpleListener(data);
-
-		manager.registerListener(listener, this);
-
-		manager.call(new SimpleEvent(data));
-
-		Assert.assertTrue(listener.getResult(), "Data was not passed properly");
+	public SimpleListener(long data) {
+		this.data = data;
 	}
 
-	/**
-	 * Returns the name of the object
-	 *
-	 * @return the objects named
-	 */
-	@Override
-	public String getName() {
-		return getClass().getSimpleName();
+	@EventHandler
+	public void simpleEvent(SimpleEvent event) {
+		if (event.getData() == data) {
+			result = true;
+		}
+	}
+
+	public long getData() {
+		return data;
+	}
+
+	public boolean getResult() {
+		return result;
+	}
+
+	public void setResult(boolean result) {
+		this.result = result;
 	}
 }
