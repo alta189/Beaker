@@ -29,7 +29,6 @@
 
 		<!-- Compile Dependency Versions -->
 		<version.alta-commons>1.1.0-SNAPSHOT</version.alta-commons>
-		<version.alta-processors>1.1.1</version.alta-processors>
 
 		<!-- Test Dependency Versions -->
 		<version.testng>6.1.1</version.testng>
@@ -101,12 +100,6 @@
 			<groupId>com.alta189</groupId>
 			<artifactId>commons</artifactId>
 			<version>${version.alta-commons}</version>
-		</dependency>
-		<!-- alta-processors -->
-		<dependency>
-			<groupId>com.alta189</groupId>
-			<artifactId>processors</artifactId>
-			<version>${version.alta-processors}</version>
 		</dependency>
 
 		<!-- Testing -->

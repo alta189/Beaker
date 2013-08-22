@@ -24,14 +24,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.alta189.annotations.RequiredParameters;
-
 /**
  * Marks a method as an handler for an event
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-@RequiredParameters(Event.class)
 public @interface EventHandler {
 	/**
 	 * <p>
