@@ -81,7 +81,7 @@ public class CommonEventManager implements EventManager {
 			Validate.notEmpty(owner.getName(), "Owner's name cannot be empty");
 
 			for (Method method : listener.getClass().getDeclaredMethods()) {
-				if (method.isAnnotationPresent(EventHandler.class)) {
+				if (!method.isAnnotationPresent(EventHandler.class)) {
 					continue;
 				}
 
