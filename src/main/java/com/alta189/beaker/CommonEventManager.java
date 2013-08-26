@@ -107,7 +107,10 @@ public class CommonEventManager implements EventManager {
 
 				EventExecutor executor = new AnnotatedEventExecutor(listener, method);
 				HandlerRegistration registration = new HandlerRegistration(executor, handler.priority(), handler.ignoreCancelled(), owner);
-				getRegistrationList((Class<? extends Event>) method.getParameterTypes()[0], true).add(registration);
+
+				List<HandlerRegistration> list = getRegistrationList((Class<? extends Event>) method.getParameterTypes()[0], true);
+				list.add(registration);
+				sortList(list);
 			}
 		} catch (EventRegistrationException e) {
 		    throw e;
@@ -151,7 +154,9 @@ public class CommonEventManager implements EventManager {
 			Validate.notNull(owner.getName(), "Owner's name cannot be null");
 			Validate.notEmpty(owner.getName(), "Owner's name cannot be empty");
 
-			getRegistrationList(event, true).add(new HandlerRegistration(eventExecutor, priority, ignoreCancelled, owner));
+			List<HandlerRegistration> list = getRegistrationList(event, true);
+			list.add(new HandlerRegistration(eventExecutor, priority, ignoreCancelled, owner));
+			sortList(list);
 		} catch (Exception e) {
 			throw new EventRegistrationException(e);
 		}

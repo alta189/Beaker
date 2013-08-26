@@ -19,6 +19,8 @@
  */
 package com.alta189.beaker;
 
+import com.alta189.beaker.test.priority.PriorityEvent;
+import com.alta189.beaker.test.priority.PriorityExecutor;
 import com.alta189.beaker.test.simple.SimpleEvent;
 import com.alta189.beaker.test.simple.SimpleListener;
 import com.alta189.commons.objects.Named;
@@ -27,7 +29,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 public class CommonEventManagerTest implements Named {
-
 	@Test
 	public void simpleTest() {
 		final EventManager manager = new CommonEventManager();
@@ -41,6 +42,23 @@ public class CommonEventManagerTest implements Named {
 		manager.call(new SimpleEvent(data));
 
 		Assert.assertTrue(listener.getResult(), "Data was not passed properly");
+	}
+
+	public void priorityTest() {
+		final EventManager manager = new CommonEventManager();
+
+		final PriorityEvent event = new PriorityEvent();
+
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(3), Priority.DEFAULT, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(1), Priority.EARLIER, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(4), Priority.LATE, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(0), Priority.EARLIEST, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(7), Priority.MONITOR, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(5), Priority.LATER, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(2), Priority.EARLY, this);
+		manager.registerExecutor(PriorityEvent.class, new PriorityExecutor(6), Priority.LATEST, this);
+
+		manager.call(event);
 	}
 
 	/**
